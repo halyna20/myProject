@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Марево смаку і користі</title>
+    <link rel="shortcut icon" href="img/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @font-face {
+            font-family: Exo2;
+            /* Гарнитура шрифта */
+            src: url(Exo2.otf);
+            /* Путь к файлу со шрифтом */
+        }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+<form align='center' id='signupForm'>
+
+    <label id="errorMessage" style="color: red"></label>
+    <h3 style="font-weight: bolder">Реєстрація</h3>
+    <br>
+    <label style="font-weight: bold">Введіть логін</label>
+    <input name="user" style="text-align: center" type="text" autofocus id="username">
+    <label style="font-weight: bold">Введіть пароль</label>
+    <input name="pass" style="text-align: center" type="password" autofocus id="password">
+    <label style="font-weight: bold">Введіть телефон</label>
+    <input name="pass" style="text-align: center" type="number" autofocus id="phone">
+    <label style="font-weight: bold">Введіть e-mail</label>
+    <input name="pass" style="text-align: center" type="text" autofocus id="mail">
+    <label style="font-weight: bold">Про себе:</label>
+    <textarea rows="3" cols="45" name="description" id="description"></textarea>
+    <br>
+    <br>
+    <input class="button" type="Submit" value="Зареєструватися">
+</form>
+<div align="center">
+    <FONT SIZE=2 color="#888888"><a href="login.html" style="font-family: Exo2">Вхід</a></FONT>
+</div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/global.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#signupForm').submit(function (e) {
+            e.preventDefault();
+            signup();
+        });
+    });
+
+    function signup() {
+            let user = {
+            username: $('#username').val(),
+            password: $('#password').val(),
+            phone: $('#phone').val(),
+            mail: $('#mail').val(),
+            description: $('#description').val()
+        };
+        $.ajax({
+            url: serverURL + 'auth/signup',
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(user),
+            complete: function (response) {
+                if (response.status == 201) {
+
+                    document.getElementById('signupForm').reset();
+                    $('#errorMessage').html("Register OK");
+                    window.localStorage.removeItem('userId');
+                    window.location.href = 'login.html';
+
+
+                } else if(response.status==406){
+                    $('#errorMessage').html("Mail already exists");
+                    document.getElementById('signupForm').reset();
+                    $('#username').focus();
+                }
+                else{
+                     $('#errorMessage').html("User already exists");
+                    document.getElementById('signupForm').reset();
+                    $('#username').focus();
+                }
+            }
+        })
+    }
+
+
+    function getIdByName(name) {
+        $.ajax({
+            url: serverURL + 'auth/username/' + name,
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                window.localStorage.setItem('userId', response);
+            }
+        });
+    }
+
+</script>
+</body>
+
+</html>

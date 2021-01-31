@@ -1,0 +1,360 @@
+﻿<!DOCTYPE html>
+<html lang="X-UA-Compatible">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Марево смаку і користі</title>
+    <link rel="shortcut icon" href="img/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- <link id="StyleLink" rel="stylesheet" href="css/style.css"> -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+         @font-face {
+            font-family: Exo2;
+            /* Гарнитура шрифта */
+            src: url(Exo2.otf);
+            /* Путь к файлу со шрифтом */
+        }
+
+        .selected {
+            font-weight: bold;
+            color: RED;
+        }
+        .selected2 {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="p_prldr">
+        <div class="contpre"><span class="svg_anm"></span>
+            <br>Зачекайте
+            <br>
+            <small>сторінка завантажується</small>
+        </div>
+    </div>
+
+    <header>
+        <a  href="" class="navlogo">
+            <img src="img/logo.jpg" alt="">
+        </a>
+        <div class="menu">
+            <ul >
+                <li>
+                    <a id="mainlink" href="#" class="">Головна</a>
+                </li>
+                <li>
+                    <a href="cabinet.html" class="">Особистий кабінет</a>
+                </li>
+                <li>
+                    <a href="how_to_order.html" class="">Як замовити</a>
+                </li>
+                <li>
+                    <a href="about_us.html" class="">Про нас</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="main">
+            <div class="field">
+                <h2>Особистий кабінет</h2>
+                <div class="photo">
+                    <img id="userImage" src="img/logo.png" width="60%">
+                    <br>
+                    <input type="file" id="image">
+                </div>
+                <div class="text"> 
+                    <button id="change_button">Змінити</button> 
+                    <div class="pole">
+                        <p>Логін: </p>
+                        <p id="login">login</p>
+                    </div>  
+
+                    <div class="pole">
+                        <p>Email: </p>
+                        <p id="mail">user@gmail.com</p>
+                    </div>  
+                    <div class="pole">
+                        <p>Номер телефону: </p>
+                        <p id="phone">+380552419789</p>
+                    </div> 
+                    
+                    <div id="about">
+                            <p>Про себе:</p>
+                            <p id="aboutme">Для Вас ми здатні приготувати меню на будь-яку хорошу подію, а наш персонал здивує красивим сервіруванням та приємним обслуговуванням.
+                                    При складанні меню правильного харчування ми враховуємо калорійність всіх страв та постійно оновлюємо його, використовуючи різноманітні рецепти.
+                                    Вам варто обрати нас, адже ми гарантуємо вчасну доставку, смачну їжу та обслуговування найвищого рівня.
+                            </p>
+                    </div>  
+                    <button id="logoutBtn">Вихід</button>  
+                    <button id="admin" style="visibility: hidden">Admin</button>  
+
+                    <!-- <div>
+                        <div class="pole">
+                            <p>Про себе:</p>
+                            <button>Змінити</button>
+                        </div>
+                        <p>ТекстТекстТекстТекст</p>
+                    </div>     -->
+                </div>    
+    
+            </div>
+    </div>
+    
+    <div style="text-align: center" id="popupWin7" class="modalwin7">
+        <label style="font-size: 18pt"> Редагувати користувача: </label>
+        <form id='pop7'>
+            <label id="errorMessageEdit" style="color: red"></label>
+
+            <input name="id" id="idEdit" hidden>
+            <label style="font-weight: bold">Логін</label>
+            <input name="name" style="text-align: center" type="text" id="loginEdit" disabled>
+            <label style="font-weight: bold">Телефон</label>
+            <input name="name" style="text-align: center" type="number" autofocus id="phoneEdit">
+            <label style="font-weight: bold">Електронна пошта</label>
+            <input name="name" style="text-align: center" type="text" autofocus id="mailEdit">
+            <label style="font-weight: bold">Про себе:</label>
+            <textarea rows="3" cols="30" name="description" id="descriptionEdit"></textarea>
+            <br>
+            <br>
+            <input class="button" type="Submit" value="OK" id="okUserEdit">
+            <input class="cancelbutton" id="cancelEdit" type="button" value="Cancel">
+        </form>
+    </div>
+
+    <footer>
+        <div class="social-media">
+            <div class="social-link">
+                <a href="https://www.instagram.com" >
+                    <img src="img/instagram.png"  alt="">
+                </a>
+            </div>
+            <div class="social-link">
+                <a href="https://www.facebook.com" >
+                    <img src="img/facebook.png"  alt="">
+                </a>
+            </div>
+        </div>
+        Марево смаку та користі<br>
+        2019
+    </footer>
+<script src="js/global.js"></script> 
+<script>
+    var userId;
+    var boxChange = $('#popupWin7');
+    var user = window.localStorage.getItem('user');
+    boxChange.addClass('visuallyhidden');
+    boxChange.addClass('hidden');
+
+    $(document).ready(function () {
+        
+        
+
+        if (token) {
+            
+            if (window.localStorage.getItem('user')==='admin'){
+                        $('#admin').css("visibility", "visible");
+                        document.getElementById("mainlink").href="index2.html";
+                    }
+                    else {
+                        $('#admin').css("visibility", "hidden");
+                        document.getElementById("mainlink").href="index.html";
+                    }
+
+            getUserInfo(user);
+            getImageByUser(user);
+           
+           
+           
+            $('#admin').on('click', function(e) {
+                    if (window.localStorage.getItem('role').includes('ROLE_ADMIN')) {
+                        window.location.href = 'adminpage.html';
+                    }
+                
+                });     
+            
+            $(document).on('change', '#image', function(e) {
+                    uploadFile(userId);
+                });
+           
+
+            $(document).on('click', '#change_button', function (e) {
+                showChange();
+            });
+            
+
+            
+            $('#cancelEdit').on('click', function(e) {
+                    closeChange();
+                });
+            
+          
+            $('#pop7').submit(function (e) {
+                e.preventDefault();
+                editUser();
+               
+                getUserInfo();
+            });
+            
+            
+        
+
+            $('#logoutBtn').on('click', function (e) {
+                window.localStorage.removeItem('auth_token');
+                window.localStorage.removeItem('role');
+                window.localStorage.removeItem('user');
+                window.location.reload();
+            });
+
+        } else {
+            $('#logoutBtn').hide();
+            window.location.href = 'login.html';
+        }
+    });
+
+    function closeChange() {
+            boxChange.addClass('visuallyhidden');
+            boxChange.one('transitionend', function(e) {
+                boxChange.addClass('hidden');
+            });
+
+        }
+    
+    function showChange() {
+        if (boxChange.hasClass('hidden')) {
+            boxChange.removeClass('hidden');
+            setTimeout(function () {
+                boxChange.removeClass('visuallyhidden');
+            }, 20);
+        }
+        $('#errorMessageEdit').hide();
+        getUserByUsername(user);
+    }
+    
+    function getUserByUsername(user){
+           let imgUrl = serverURL + 'auth/image?fileName=';
+            $.ajax({
+                url: serverURL + 'auth/userinfo/'+user+'/',
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function(response) {
+                  
+                   
+                    document.getElementById('idEdit').value = response.id;
+                    document.getElementById('loginEdit').value = response.username;
+                    document.getElementById('phoneEdit').value = response.phone;
+                    document.getElementById('mailEdit').value = response.mail;
+                    $('#descriptionEdit').text(response.description);
+                    
+                    
+                    
+                }
+            });
+    }
+    
+    
+    function editUser() {
+            let phone = $('#phoneEdit').val();
+            let mail = $('#mailEdit').val();
+            let description = $('#descriptionEdit').val();
+            $.ajax({
+                url: serverURL + 'auth/' + userId + '/' + phone + '/' + mail +'/'+ description,
+                method: 'POST',
+                complete: function(response) {
+                    if (response.status == 200) {
+                        $('#errorMessageEditUser').hide();
+                        $('#usersTable tbody').empty();
+                       getUserInfo();
+                        closeChange();
+                    }
+                    if (response.status == 400) {
+                        $('#errorMessageEditUser').html(response.responseJSON.message);
+                        $('#errorMessageEditUser').show();
+                    }
+                    if (response.status == 409) {
+                        $('#errorMessageEditUser').html(response.responseJSON.message);
+                        $('#errorMessageEditUser').show();
+                    }
+                    if (response.status == 403) {
+                        $('#errorMessageEditUser').html("Acces denied");
+                        $('#errorMessageEditUser').show();
+                    }
+
+                }
+            })
+        }
+    
+    function getUserInfo(){
+        let usname = user;
+            $.ajax({
+                url: serverURL + 'auth/userinfo/'+usname+'/',
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function(response) {
+                    
+                   
+                    $('#login').text(response.username);
+                    $('#mail').text(response.mail);
+                    $('#phone').text(response.phone);
+                    $('#aboutme').text(response.description);
+                    userId=response.id;
+                }
+            });
+    }
+    
+    function getImageByUser(user) {
+            $.ajax({
+                url: serverURL + 'auth/username/' + user,
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+                complete: function(response) {
+                    
+                    if (response.responseText == "") {
+                        $('#userImage').attr("src", "user.png");
+                    } else {
+                        $('#userImage').attr("src", serverURL + "auth/image?fileName=" + response.responseText);
+                    }
+                }
+            });
+        }
+    
+      function uploadFile(userId) {
+            let formData = new FormData();
+            formData.append('file', $('#image')[0].files[0]);
+            $.ajax({
+                url: serverURL + 'auth/' + userId + '/image',
+                method: 'POST',
+                contentType: false,
+                processData: false,
+                data: formData,
+                complete: function(res) {
+                    if (res.status == 202) {
+                        getImageByUser(user);
+                    }
+                }
+            })
+        }
+    
+    
+    
+    
+    </script>
+    <script type="text/javascript">
+    $(window).on('load', function () {
+        var $preloader = $('#p_prldr'),
+            $svg_anm = $preloader.find('.svg_anm');
+        $svg_anm.fadeOut();
+        $preloader.delay(500).fadeOut('slow');
+    });
+
+</script>
+</body>
+</html>

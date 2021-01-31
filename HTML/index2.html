@@ -1,0 +1,948 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta property="og:title" content="Пасат-Крок.Склад"/>
+    <meta property="og:image" content="social.png"/>
+    <title>Марево смаку і користі</title>
+    <link rel="shortcut icon" href="img/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @font-face {
+            font-family: Exo2;
+            /* Гарнитура шрифта */
+            src: url(Exo2.otf);
+            /* Путь к файлу со шрифтом */
+        }
+
+        .selected {
+            font-weight: bold;
+            color: RED;
+        }
+        .selected2 {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+<div id="p_prldr">
+    <div class="contpre"><span class="svg_anm"></span>
+        <br>Зачекайте
+        <br>
+        <small>сторінка завантажується</small>
+    </div>
+</div>
+<header style="margin-bottom: 3em">
+    <a  href="index2.html" class="navlogo">
+        <img src="img/logo.jpg" alt="">
+    </a>
+    <div class="menu">
+        <ul >
+            <li>
+                <a href="index2.html" class="">Головна</a>
+            </li>
+            <li>
+                <a href="cabinet.html" class="">Особистий кабінет</a>
+            </li>
+            <li>
+                <a href="how_to_order.html" class="">Як замовити</a>
+            </li>
+            <li>
+                <a href="about_us.html" class="">Про нас</a>
+            </li>
+        </ul>
+    </div>
+</header>
+<!--    <a href="adminpage.html"><img src="adminlink.png" width="2%">ADMIN</a>-->
+<div class="view">
+    <table class="table_blur" id="partsTable">
+        <thead>
+        <tr>
+            <th hidden>id</th>
+            <th>Назва</th>
+            <th>К-сть</th>
+            <th>Вага</th>
+            <th>Ціна</th>
+            <th hidden>Опис</th>
+            <th hidden>Зміни</th>
+            <th hidden>Тип</th>
+            <th hidden>Постачальник</th>
+            <th ></th>
+            <th ></th>
+            <th></th>
+            <th hidden>Малюнок</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <img id="partImg" class="img" src="empty.png" width="60%">
+
+    <div class="menu1">
+
+        <label style="font-weight: bold">Калорійність</label>
+        <select class="s1" name="s1" id="firm">
+        </select>
+
+
+        <label style="font-weight: bold">Категорія</label>
+        <select class="s2" name="s2" id="type">
+        </select>
+
+        <label style="font-weight: bold">Сортування</label>
+        <select class="s3" name="s3" id="sortTable">
+            <option>Name</option>
+            <option>Quantity</option>
+        </select>
+
+
+        <label style="font-weight: bold">Пошук:</label>
+        <input type=text id="search">
+        
+        <label  style="font-weight: bold">Новий продукт</label>
+        <input  class="button" id="Add" type="button" value="Додати продукт">
+        
+        <input  class="button" id="trashbutton" type="button" value="Кошик" style="visibility: hidden">
+     
+        
+
+
+        <label style="font-weight: bold; visibility: hidden">Прихід</label>
+        <input  id="plus" type=number value="0" min="0" style="visibility: hidden">
+
+        <label  style="font-weight: bold; visibility: hidden">Send</label>
+        <input  id="submitAddMinus" disabled class="button" type="button" value="Підтвердити" style="visibility: hidden">
+
+        <label  style="font-weight: bold; visibility: hidden">Розхід</label>
+        <input  id="minus" type=number value="0" min="0" style="visibility: hidden">
+        
+        
+        <!-- <label id="trashbutton" style="font-weight: bold; visibility: hidden">Кошик</label> -->
+        <label id="continuemakeorder" style="font-weight: bold; visibility: hidden">Продовжити замовлення</label>
+        <label id="sendorder" style="font-weight: bold; visibility: hidden">Надіслати</label>
+        <label id="adress" style="font-weight: bold; visibility: hidden">Адреса доставки</label>
+        <input name="text" type="text" id="adressDelivery" style="visibility: hidden">
+        <label id="dayMake" style="font-weight: bold; visibility: hidden">На коли має бути готово:</label>
+        <input type="date" style="visibility: hidden" name="dayMakeOrder" id="dayMakeOrder">
+
+
+    </div>
+</div>
+<br>
+
+<div style="text-align: center" id="popupWin" class="modalwin1">
+    <label style="font-size: 18pt"> Додати продукт: </label>
+    <br>
+    <form id='pop'>
+
+        <label id="errorMessage" style="color: red"></label>
+        <label style="font-weight: bold">Назва</label>
+        <input name="text" style="text-align: center" type="text" autofocus id="nameAdd">
+        <label style="font-weight: bold">Кількість</label>
+        <input name="text" type="number" value="0" id="quantityAdd">
+        <label style="font-weight: bold">Вага</label>
+        <input name="text" type="number" value="0" min="0" max="10000" id="placeAdd">
+        <label style="font-weight: bold">Ціна</label>
+        <input name="text" type="number" value="0" min="0" max="99999" step="0.001" id="priceAdd">
+        <label style="font-weight: bold; visibility: hidden">Опис</label>
+        <input name="text" type="text" id="descriptionAdd" style="visibility: hidden">
+        <br>
+        <br>
+        <input class="button" id="okAdd" type="Submit" value="OK">
+        <input class="cancelbutton" id="cancelAdd" type="button" value="Cancel">
+    </form>
+</div>
+
+<div style="text-align: center" id="popupWin2" class="modalwin2">
+    <label style="font-size: 18pt"> Редагувати запчастину: </label>
+    <br>
+    <form id='pop2'>
+        <label id="errorMessageEdit" style="color: red"></label>
+
+        <input name="id" id="idEdit" hidden>
+        <label style="font-weight: bold">Назва</label>
+        <input name="name" style="text-align: center" type="text" autofocus id="nameEdit">
+        <label style="font-weight: bold">Кількість</label>
+        <input name="quantity" type="number" id="quantityEdit">
+        <label style="font-weight: bold">Вага</label>
+        <input name="place" type="number" value="0" min="0" max="10000" id="placeEdit">
+        <label style="font-weight: bold">Ціна</label>
+        <input name="price" type="number" value="0" min="0" max="99999" step="0.001" id="priceEdit">
+       
+        <label style="font-weight: bold">Калорійність</label>
+        <select class="sa1" name="firm.id" id="firmEdit">
+        </select>
+        <label style="font-weight: bold">Категорія</label>
+        <select class="sa2" name="type.id" id="typeEdit">
+        </select>
+        <input name="image" id="imgEdit" hidden>
+        
+        <input name="userChange" id="userChange" hidden>
+        <label style="font-weight: bold">Малюнок</label>
+        <input name="file" type="file" class="form-control" id="imageEdit" accept="image/*,image/jpeg">
+        
+         <label style="font-weight: bold;visibility: hidden">Опис</label>
+        <input name="description" type="text" id="descriptionEdit" style="visibility: hidden">
+        <br>
+        <br>
+        <input class="button" type="Submit" value="OK" id="okEdit">
+        <input class="cancelbutton" id="cancelEdit" type="button" value="Cancel">
+    </form>
+</div>
+
+<div style="text-align: center" id="popupWin6" class="modalwin6">
+    <label style="font-size: 18pt"> Додавання в кошик: </label>
+    <br>
+    <form id='pop6'>
+        <label id="errorMessageEdit" style="color: red"></label>
+
+        <input name="id" id="idTrash" hidden>
+        <label style="font-weight: bold">Назва</label>
+        <input name="name" style="text-align: center" type="text" autofocus id="nameTrash" disabled>
+        <label style="font-weight: bold">Кількість</label>
+        <input name="quantity" type="number" id="quantityTrash">
+         <label style="font-weight: bold">Вага</label>
+            <input name="weight" type="number" id="weightTrash" disabled>
+        <label style="font-weight: bold">Ціна</label>
+        <input name="price" type="number" min="0" max="99999" step="0.001" id="priceTrash" disabled>
+        <br>
+        <br>
+        <input class="button" type="Submit" value="OK" id="okTrash">
+        <input class="cancelbutton" id="cancelTrash" type="button" value="Cancel">
+    </form>
+</div>
+
+
+<footer>
+    <div class="social-media">
+        <div class="social-link">
+            <a href="https://www.instagram.com" >
+                <img src="img/instagram.png"  alt="">
+            </a>
+        </div>
+        <div class="social-link">
+            <a href="https://www.facebook.com" >
+                <img src="img/facebook.png"  alt="">
+            </a>
+        </div>
+    </div>
+    Марево смаку та користі<br>
+    2019
+    <!-- <label id="admin">admin</label> -->
+</footer>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/global.js"></script> 
+<script>
+    var selectedId;
+    var isSelectedPart = false;
+    var selectedImg;
+    var boxAdd = $('#popupWin');
+    var boxEdit = $('#popupWin2');
+    var boxTrash= $('#popupWin6');
+    var user = window.localStorage.getItem('user');
+    boxAdd.addClass('visuallyhidden');
+    boxAdd.addClass('hidden');
+    boxEdit.addClass('visuallyhidden');
+    boxEdit.addClass('hidden');
+    boxTrash.addClass('visuallyhidden');
+    boxTrash.addClass('hidden');
+
+    $(document).ready(function () {
+
+        if (token) {
+            if (window.localStorage.getItem('user')!='admin'){
+                        window.location.href = 'index.html';
+                    }
+                
+
+            getFirmsTypes();
+            setTimeout(getPartsAdmin,1200);
+            getImageByUser(user);
+            
+            
+
+
+            $('#admin').on('click', function (e) {
+                if (window.localStorage.getItem('role').includes('ROLE_ADMIN')) {
+                    window.location.href = 'adminpage.html';
+                }
+            });
+            $('#firm').on('change', function (e) {
+                isSelectedPart = false;
+                $('#partImg').attr("src", "empty.png");
+                getPartsAdmin();
+            });
+            $('#type').on('change', function (e) {
+                isSelectedPart = false;
+                $('#partImg').attr("src", "empty.png");
+                getPartsAdmin();
+            });
+            $('#sortTable').on('change', function (e) {
+                isSelectedPart = false;
+                $('#partImg').attr("src", "empty.png");
+                getPartsAdmin();
+            });
+            
+            
+            $('#continuemakeorder').on('click', function (e) {
+                isSelectedPart = false;
+                $('#partImg').attr("src", "empty.png");
+                getParts();
+                $('#sendorder').css("visibility", "hidden");
+                $('#continuemakeorder').css("visibility", "hidden");
+                $('#dayMake').css("visibility", "hidden");
+                $('#dayMakeOrder').css("visibility", "hidden");
+                $('#adressDelivery').css("visibility", "hidden");
+                $('#adress').css("visibility", "hidden");
+                
+            });
+            $('#sendorder').on('click', function (e) {
+                isSelectedPart = false;
+                $('#partImg').attr("src", "empty.png");
+                sendOrder(window.localStorage.getItem('user'));
+                $('#sendorder').css("visibility", "hidden");
+                document.getElementById('adressDelivery').value="";
+                
+                
+            });
+            $('#dayMakeOrder').on('change', function (e) {
+                $('#sendorder').css("visibility", "visible");
+            });
+            
+            
+            $('#search').on('keyup', function (e) {
+                isSelectedPart = false;
+                $('#partImg').attr("src", "empty.png");
+                getPartsAdmin();
+            });
+            $('#Add').on('click', function (e) {
+                isSelectedPart = false;
+                $('#partImg').attr("src", "empty.png");
+                showAdd();
+            });
+            $('#pop').submit(function (e) {
+                e.preventDefault();
+                isSelectedPart = false;
+                $('#partImg').attr("src", "empty.png");
+                addPart();
+            });
+            $('#cancelAdd').on('click', function (e) {
+                isSelectedPart = false;
+                $('#partImg').attr("src", "empty.png");
+                closeAdd();
+            });
+            $('#cancelEdit').on('click', function (e) {
+                isSelectedPart = false;
+                $('tr').removeClass('selected');
+                $('#submitAddMinus').attr('disabled', 'disabled');
+                $('#partImg').attr("src", "empty.png");
+                closeEdit();
+            });
+            $('#cancelTrash').on('click', function (e) {
+                isSelectedPart = false;
+                $('tr').removeClass('selected');
+                $('#submitAddMinus').attr('disabled', 'disabled');
+                $('#partImg').attr("src", "empty.png");
+                closeTrash();
+            });
+            
+              $('#trashbutton').on('click', function (e) {
+                isSelectedPart = false;
+                $('#partImg').attr("src", "empty.png");
+                getTrash();
+                $('#continuemakeorder').css("visibility", "visible");
+                $('#dayMake').css("visibility", "visible");
+                $('#dayMakeOrder').css("visibility", "visible");
+                $('#adressDelivery').css("visibility", "visible");
+                $('#adress').css("visibility", "visible");
+            });
+
+
+            $(document).on('click', '#submitAddMinus', function (e) {
+                isSelectedPart = false;
+                let plus = $('#plus').val();
+                let minus = $('#minus').val();
+                setQuantityById(selectedId, plus, minus);
+                document.getElementById('plus').value = "0";
+                document.getElementById('minus').value = "0";
+                $('#partImg').attr("src", "empty.png");
+            });
+
+
+            $(document).on('click', '#partsTable tbody tr', function (e) {
+                $('tr').removeClass();
+                $(this).addClass('selected');
+                isSelectedPart = true;
+                selectedId = $(this).children('td:first-child').text().split(" ")[0];
+                selectedImg = $(this).children('td:last-child').text();
+                $('#submitAddMinus').removeAttr('disabled');
+
+            });
+
+            $(document).on('mouseenter', '#partsTable tbody tr', function (e) {
+                $('tr').removeClass('selected2');
+                $(this).addClass('selected2');
+                let partImage = $(this).children('td:last-child').text();
+                $('#partImg').attr("src", serverURL + "parts/image?fileName=" + partImage);
+            });
+
+            $(document).on('mouseleave', '#partsTable tbody tr', function (e) {
+                $('tr').removeClass('selected2');
+                if (isSelectedPart) {
+                    $('#partImg').attr("src", serverURL + "parts/image?fileName=" + selectedImg);
+                } else {
+                    $('#partImg').attr("src", "empty.png");
+                }
+            });
+
+            $('#pop2').submit(function (e) {
+                e.preventDefault();
+                isSelectedPart = false;
+                editPart();
+            });
+            
+            $('#pop6').submit(function (e) {
+                e.preventDefault();
+                isSelectedPart = false;
+                addTrash();
+            });
+
+            $(document).on('click', '#partsTable tbody button.btn-delete', function (e) {
+                var r = confirm("Ви дійсно бажаєте видалити запчастину?");
+                if (r == true) {
+                    let elementId = e.target.id;
+                    let partId = elementId.split('-')[1];
+                    deletePart(partId);
+                }
+            });
+            $(document).on('click', '#partsTable tbody button.btn-del', function (e) {
+                var r = confirm("Ви дійсно бажаєте видалити позицію?");
+                if (r == true) {
+                    let elementId = e.target.id;
+                    let partId = elementId.split('-')[1];
+                    deleteTrash(partId);
+                }
+            });
+
+            $(document).on('click', '#partsTable tbody button.btn-edit', function (e) {
+                let elementId = e.target.id;
+                let partId = elementId.split('-')[1];
+                showEdit(partId);
+            });
+            
+            $(document).on('click', '#partsTable tbody button.btn-trash', function (e) {
+                let elementId = e.target.id;
+                let partId = elementId.split('-')[1];
+                showTrash(partId);
+            });
+
+            $('#logoutBtn').on('click', function (e) {
+                window.localStorage.removeItem('auth_token');
+                window.localStorage.removeItem('role');
+                window.localStorage.removeItem('user');
+                window.location.reload();
+            });
+
+        } else {
+            $('#logoutBtn').hide();
+            window.location.href = 'login.html';
+        }
+    });
+
+    function showAdd() {
+        if (boxAdd.hasClass('hidden')) {
+            boxAdd.removeClass('hidden');
+            setTimeout(function () {
+                boxAdd.removeClass('visuallyhidden');
+            }, 20);
+        }
+        $('#errorMessage').hide();
+        $('#nameAdd').focus();
+    }
+
+    function closeAdd() {
+        boxAdd.addClass('visuallyhidden');
+        boxAdd.one('transitionend', function (e) {
+            boxAdd.addClass('hidden');
+        });
+        document.getElementById("pop").reset();
+    }
+
+    function showEdit(partId) {
+        if (boxEdit.hasClass('hidden')) {
+            boxEdit.removeClass('hidden');
+            setTimeout(function () {
+                boxEdit.removeClass('visuallyhidden');
+            }, 20);
+        }
+        $('#errorMessageEdit').hide();
+        getPartById(partId);
+        document.getElementById('imageEdit').value="";
+    }
+
+    function closeEdit() {
+        boxEdit.addClass('visuallyhidden');
+        boxEdit.one('transitionend', function (e) {
+            boxEdit.addClass('hidden');
+        });
+
+    }
+    
+    function showTrash(partId) {
+        if (boxTrash.hasClass('hidden')) {
+            boxTrash.removeClass('hidden');
+            setTimeout(function () {
+                boxTrash.removeClass('visuallyhidden');
+            }, 20);
+        }
+        $('#errorMessageEdit').hide();
+        getTrashById(partId);
+        document.getElementById('imageEdit').value="";
+    }
+    
+    function closeTrash() {
+        boxTrash.addClass('visuallyhidden');
+        boxTrash.one('transitionend', function (e) {
+            boxTrash.addClass('hidden');
+        });
+
+    }
+    
+    function deleteTrash(partId) {
+        $.ajax({
+            url: serverURL + 'trash/' + partId,
+            method: 'DELETE',
+            success: function (response) {
+                $('#partsTable tbody').empty();
+                getTrash();
+            }
+        });
+    }
+
+    function getFirmsTypes() {
+        $.ajax({
+            url: serverURL + 'firms',
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                $('#firm').empty();
+                $.each(response, function (key, value) {
+                    $('#firm').append(
+                        `
+                            <option value="${value.id}">${value.name}</option>
+                            `);
+                })
+            }
+        });
+        $.ajax({
+            url: serverURL + 'types',
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                $('#type').empty();
+                $.each(response, function (key, value) {
+                    $('#type').append(
+                        `
+                            <option value="${value.id}">${value.name}</option>
+                            `);
+                })
+            }
+        });  
+        $.ajax({
+            url: serverURL + 'firms',
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                $('#firmEdit').empty();
+                $.each(response, function (key, value) {
+                    $('#firmEdit').append(
+                        `
+                            <option value="${value.id}">${value.name}</option>
+                            `);
+                })
+            }
+        });
+        $.ajax({
+            url: serverURL + 'types',
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                $('#typeEdit').empty();
+                $.each(response, function (key, value) {
+                    $('#typeEdit').append(
+                        `
+                            <option value="${value.id}">${value.name}</option>
+                            `);
+                })
+            }
+        }); 
+    }
+
+
+    function getParts() {
+        let search = $('#search').val();
+        let sort = $('#sortTable').val();
+        let firm = $('#firm option:selected').text();
+        let type = $('#type option:selected').text();
+        let url1 = 'parts/' + firm + '/' + type + '/' + sort + '?search=' + search;
+        $.ajax({
+            url: serverURL + url1,
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                $('#submitAddMinus').attr('disabled', 'disabled');
+                $('#partImg').attr("src", "empty.png");
+                $('#partsTable tbody').empty();
+                $.each(response, function (key, value) {
+                    $('#partsTable tbody').append(
+                        `
+                            <tr id="rowID-${value.id}">
+                            <td hidden>${value.id} </td>
+                            <td>${value.name} </td>
+                            <td>${value.quantity} </td>
+                            <td hidden>${value.place} </td>
+                            <td>${value.price} </td>
+                            <td hidden>${value.description} </td>
+                            <td hidden>${value.lastChanges} - ${value.userChange}</td>
+                            <td hidden>${value.type} </td>
+                            <td hidden>${value.firm} </td>
+                            <td hidden>
+                                    <button id="part-${value.id}" class="btn-edit">Редагувати</button>    
+                            </td>
+                            <td hidden>
+                                    <button id="part-${value.id}" class="btn-delete">Видалити</button>    
+                            </td>
+                            <td>
+                                    <button id="part-${value.id}" class="btn-trash">В кошик</button>    
+                            </td>
+                            <td hidden>${value.image} </td>
+                            </tr>
+                            `);
+                })
+            }
+        });
+    }
+    
+    
+    
+     function getTrash() {
+        let user = window.localStorage.getItem('user');
+        let url1 = 'trash/u' + '?user=' + user;
+         $.ajax({
+            url: serverURL + url1,
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                $('#submitAddMinus').attr('disabled', 'disabled');
+                $('#partImg').attr("src", "empty.png");
+                $('#partsTable tbody').empty();
+                $.each(response, function (key, value) {
+                    $('#partsTable tbody').append(
+                        `
+                            <tr id="rowID-${value.id}">
+                            <td hidden>${value.id} </td>
+                            <td>${value.name} </td>
+                            <td>${value.quantity} </td>
+                            <td>${value.place} </td>
+                            <td>${value.price} </td>
+                            <td hidden>${value.description} </td>
+                            <td hidden>${value.lastChanges} - ${value.userChange}</td>
+                            <td hidden>${value.type} </td>
+                            <td hidden>${value.firm} </td>
+                            <td hidden>
+                                    <button id="part-${value.id}" class="btn-edit">Редагувати</button>    
+                            </td>
+                            <td hidden>
+                                    <button id="part-${value.id}" class="btn-delete">Видалити</button>    
+                            </td>
+                            <td>
+                                    <button id="part-${value.id}" class="btn-del">Видалити</button>    
+                            </td>
+                            <td hidden>${value.image} </td>
+                            </tr>
+                            `);
+                })
+            }
+        });
+    }
+    
+    
+    function getPartsAdmin() {
+        let search = $('#search').val();
+        let sort = $('#sortTable').val();
+        let firm = $('#firm option:selected').text();
+        let type = $('#type option:selected').text();
+        let url1 = 'parts/' + firm + '/' + type + '/' + sort + '?search=' + search;
+        $.ajax({
+            url: serverURL + url1,
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                $('#submitAddMinus').attr('disabled', 'disabled');
+                $('#partImg').attr("src", "empty.png");
+                $('#partsTable tbody').empty();
+                $.each(response, function (key, value) {
+                   $('#partsTable tbody').append(
+                        `
+                            <tr id="rowID-${value.id}">
+                            <td hidden>${value.id} </td>
+                            <td>${value.name} </td>
+                            <td>${value.quantity} </td>
+                            <td>${value.place} </td>
+                            <td>${value.price} </td>
+                            <td hidden>${value.description} </td>
+                            <td hidden>${value.lastChanges} - ${value.userChange}</td>
+                            <td hidden>${value.type} </td>
+                            <td hidden>${value.firm} </td>
+                            <td>
+                                    <button id="part-${value.id}" class="btn-edit">Редагувати</button>    
+                            </td>
+                            <td>
+                                    <button id="part-${value.id}" class="btn-delete">Видалити</button>    
+                            </td>
+                            <td>
+                                       
+                            </td>
+                            <td hidden>${value.image} </td>
+                            </tr>
+                            `);
+                })
+            }
+        });
+    }
+
+
+    function addPart() {
+        let name = $('#nameAdd').val();
+        let quantity = $('#quantityAdd').val();
+        let place = $('#placeAdd').val();
+        let price = $('#priceAdd').val();
+        let description = $('#descriptionAdd').val();
+        let image = "null";
+        let firm = $('#firm').val();
+        let type = $('#type').val();
+        let userChange = window.localStorage.getItem('user');
+        let part = {
+            name: name,
+            quantity: quantity,
+            place: place,
+            price: price,
+            description: description,
+            image: image,
+            firm: {
+                id: firm
+            },
+            type: {
+                id: type
+            },
+            userChange: userChange
+        };
+        $.ajax({
+            url: serverURL + 'parts',
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(part),
+            complete: function (response) {
+                if (response.status == 201) {
+                    $('#partsTable tbody').empty();
+                    $('#errorMessage').hide();
+                    getPartsAdmin();
+                    closeAdd();
+                }
+                if (response.status == 409) {
+                    $('#errorMessage').html(response.responseJSON.message);
+                    $('#errorMessage').show();
+                }
+                if (response.status == 400) {
+                    $('#errorMessage').html(response.responseJSON.message);
+                    $('#errorMessage').show();
+                }
+
+            }
+        })
+    }
+    
+    
+    function addTrash() {
+        let name = $('#nameTrash').val();
+        let quantity = $('#quantityTrash').val();
+        let price = $('#priceTrash').val();
+        let summ = Number(quantity)*Number(price);
+        let user = window.localStorage.getItem('user');
+        let trash = {
+            name: name,
+            quantity: quantity,
+            price: price,
+            summ: summ,
+            user: user
+        };
+        $.ajax({
+            url: serverURL + 'trash',
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(trash),
+            complete: function (response) {
+                if (response.status == 201) {
+                    $('#partsTable tbody').empty();
+                    $('#errorMessage').hide();
+                    getPartsAdmin();
+                    closeTrash();
+                }
+                if (response.status == 409) {
+                    $('#errorMessage').html(response.responseJSON.message);
+                    $('#errorMessage').show();
+                }
+                if (response.status == 400) {
+                    $('#errorMessage').html(response.responseJSON.message);
+                    $('#errorMessage').show();
+                }
+
+            }
+        })
+    }
+
+    function deletePart(partId) {
+        $.ajax({
+            url: serverURL + 'parts/' + partId,
+            method: 'DELETE',
+            success: function (response) {
+                $('#partsTable tbody').empty();
+                getPartsAdmin();
+            }
+        });
+    }
+
+    function getPartById(partId) {
+        $.ajax({
+            url: serverURL + 'parts/' + partId,
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                document.getElementById('idEdit').value = response.id;
+                document.getElementById('nameEdit').value = response.name;
+                document.getElementById('quantityEdit').value = response.quantity;
+                document.getElementById('placeEdit').value = response.place;
+                document.getElementById('descriptionEdit').value = response.description;
+                document.getElementById('priceEdit').value = response.price;
+                document.getElementById('imgEdit').value = response.image;
+                document.getElementById('firmEdit').value = response.firm.id;
+                document.getElementById('typeEdit').value = response.type.id;
+                document.getElementById('userChange').value = window.localStorage.getItem('user');
+            }
+        });
+    }
+    
+    function getTrashById(partId) {
+        $.ajax({
+            url: serverURL + 'parts/' + partId,
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                document.getElementById('idTrash').value = response.id;
+                document.getElementById('nameTrash').value = response.name;
+                document.getElementById('quantityTrash').value = response.quantity;
+                document.getElementById('priceTrash').value = response.price;
+                document.getElementById('userChange').value = window.localStorage.getItem('user');
+            }
+        });
+    }
+
+    function getImageByUser(user) {
+        $.ajax({
+            url: serverURL + 'auth/username/' + user,
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            complete: function (response) {
+                console.log(response.responseText);
+                if (response.responseText == "") {
+                    $('#userImg').attr("src", "user.png");
+                } else {
+                    $('#userImg').attr("src", serverURL + "auth/image?fileName=" + response.responseText);
+                }
+            }
+        });
+    }
+
+
+    function editPart() {
+        $.ajax({
+            url: serverURL + 'parts/edit',
+            type: 'POST',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            data: new FormData($('#pop2')[0]),
+            complete: function (response) {
+                if (response.status == 200) {
+                    $('#errorMessageEdit').hide();
+                    getPartsAdmin();
+                    closeEdit();
+                }
+                if (response.status == 400) {
+                    $('#errorMessageEdit').html(response.responseJSON.message);
+                    $('#errorMessageEdit').show();
+                }
+                if (response.status == 409) {
+                    $('#errorMessageEdit').html(response.responseJSON.message);
+                    $('#errorMessageEdit').show();
+                }
+            }
+        })
+    }
+    
+    function sendOrder(user) {
+        let date = $('#dayMakeOrder').val();
+        let adress = $('#adressDelivery').val();
+        $.ajax({
+            url: serverURL + 'trash/ins/' + user + '/' +date+'/'+adress+'/',
+            method: 'POST',
+            success: function (response) {
+                $('#partsTable tbody').empty();
+                getTrash();
+            }
+        });
+    }
+
+    function setQuantityById(id, plus, minus) {
+        $.ajax({
+            url: serverURL + 'parts/quantity/' + id + '/' + plus + '/' + minus + '/' + user + '/',
+            method: 'POST',
+            success: function (response) {
+                $('#partsTable tbody').empty();
+                getPartsAdmin();
+            }
+        });
+    }
+
+</script>
+
+<script type="text/javascript">
+    $(window).on('load', function () {
+        var $preloader = $('#p_prldr'),
+            $svg_anm = $preloader.find('.svg_anm');
+        $svg_anm.fadeOut();
+        $preloader.delay(500).fadeOut('slow');
+    });
+
+</script>
+</body>
+
+</html>
